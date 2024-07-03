@@ -252,3 +252,97 @@ docker volume rm: Remove a volume.
 docker volume rm my-volume
 
 ```
+
+
+# My own Docker File
+
+```
+
+FROM node:14
+
+# Create app directory
+WORKDIR /usr/src/app
+
+# Copy package.json and install dependencies
+COPY package*.json ./
+RUN npm install
+
+# Copy app source code
+COPY . .
+
+# Expose the port
+EXPOSE 3000
+
+# Start the backend service
+CMD ["node", "backend.js"]
+
+
+```
+
+## Lets Explain this Docker File 
+Break it in step by step
+
+```
+
+FROM node:14
+
+```
+Explanation: This line specifies the base image for the Docker image. node:14 refers to the official Node.js Docker image with version 14. The base image includes Node.js and npm (Node Package Manager) pre-installed, which are necessary for running a Node.js application.
+
+
+```
+
+Create app directory
+
+WORKDIR /usr/src/app
+
+```
+Explanation: This line sets the working directory inside the container to /usr/src/app. All subsequent COPY, RUN, and other commands will be executed relative to this directory. If the directory does not exist, it will be created automatically.
+
+```
+
+
+Copy package.json and install dependencies
+
+COPY package*.json ./
+
+```
+
+Explanation: This line copies the package.json and package-lock.json files from the host machine to the working directory inside the container. The package*.json pattern ensures both files are copied, if present. These files contain the metadata and dependencies of the Node.js application.
+
+
+```
+
+RUN npm install
+
+```
+
+Explanation: This line runs the npm install command inside the container, which installs the dependencies listed in the package.json file. By copying only the package.json files before running npm install, Docker can cache this step and reuse the layer if the package.json files haven't changed, speeding up subsequent builds.
+
+```
+
+Copy app source code
+
+COPY . .
+
+```
+Explanation: This line copies the rest of the application's source code from the host machine to the working directory inside the container (/usr/src/app). This includes all the application's files and directories.
+
+```
+
+Expose the port
+EXPOSE 3000
+
+```
+
+Explanation: This line informs Docker that the container will listen on port 3000 at runtime. It does not actually publish the port; it serves as documentation and can be used by orchestration tools to configure network routing.
+
+
+```
+
+Start the backend service
+CMD ["node", "backend.js"]
+
+```
+Explanation: This line specifies the command to run when the container starts. In this case, it runs node backend.js, which starts the Node.js application. The CMD instruction should be used to provide the default command for the container. Note that CMD can be overridden when you run the container with docker run.
+
