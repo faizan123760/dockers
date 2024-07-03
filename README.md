@@ -79,3 +79,31 @@ docker rmi: Remove an image.
 docker rmi <image_id>
 
 ```
+
+# Writing a Dockerfile
+A Dockerfile is a text file that contains a series of instructions on how to build a Docker image.
+
+## Example Dockerfile for a simple Python application:
+
+```
+# Use the official Python image from the Docker Hub
+FROM python:3.8-slim-buster
+
+# Set the working directory in the container
+WORKDIR /app
+
+# Copy the requirements.txt file to the working directory
+COPY requirements.txt .
+
+# Install any dependencies
+RUN pip install --no-cache-dir -r requirements.txt
+
+# Copy the rest of the application code to the working directory
+COPY . .
+
+# Specify the command to run the application
+CMD ["python", "app.py"]
+
+
+```
+
