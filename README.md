@@ -292,7 +292,6 @@ Explanation: This line specifies the base image for the Docker image. node:14 re
 
 ```
 
-Create app directory
 
 WORKDIR /usr/src/app
 
@@ -301,8 +300,6 @@ Explanation: This line sets the working directory inside the container to /usr/s
 
 ```
 
-
-Copy package.json and install dependencies
 
 COPY package*.json ./
 
@@ -321,7 +318,6 @@ Explanation: This line runs the npm install command inside the container, which 
 
 ```
 
-Copy app source code
 
 COPY . .
 
@@ -330,7 +326,6 @@ Explanation: This line copies the rest of the application's source code from the
 
 ```
 
-Expose the port
 EXPOSE 3000
 
 ```
@@ -340,7 +335,6 @@ Explanation: This line informs Docker that the container will listen on port 300
 
 ```
 
-Start the backend service
 CMD ["node", "backend.js"]
 
 ```
